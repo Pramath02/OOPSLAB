@@ -1,0 +1,158 @@
+#include<iostream>
+using namespace std;
+struct nod{
+	int info;
+	struct nod*next;
+};
+typedef struct nod node;
+class list
+{
+	node *head;
+	public:
+	list()
+	{
+	head=NULL;
+	}
+	void insert_beg(int num)
+	{
+		node *ptr=new node;
+		ptr->info=num;
+		ptr->next=head;
+		head=ptr;
+	}
+	void insert_end(int num)
+	{
+		node *ptr=new node;
+		ptr->info=num;
+		node *temp=head;	
+		while(temp->next!=NULL)
+		{
+			temp=temp->next;
+		}
+		temp->next=ptr;
+		ptr->next=NULL;
+	}
+	
+	void del_end()
+	{
+		if(head==NULL)
+		cout<<"No elem to delete\n";
+		else
+		{
+			node *temp=head->next;
+			node *ptr=head;
+			while(temp->next!=NULL)
+			{
+				temp=temp->next;
+				ptr=ptr->next;
+			}
+			ptr->next=NULL;
+			delete temp;
+		}
+		return;
+	}
+	void insert_random(int num)
+	{
+		int loc;
+		cout<<"Enter the location to insert\n";
+		cin>>loc;
+		node *ptr=new node;
+		ptr->info=num;
+		node *temp=head;
+		for(int i=0;i<loc;i++)
+		{
+			temp=temp->next;
+		}
+		ptr->next=temp->next;
+		temp->next=ptr;
+	}
+	void del_random()
+	{
+		int loc;
+		cout<<"Enter the location to delete\n";
+		cin>>loc;
+		if(head==NULL)
+		cout<<"No elem to delete\n";
+		else
+		{
+			node *temp=head->next;
+			node *ptr=head;
+			for(int i=0;i<loc;i++)
+			{
+				temp=temp->next;
+				ptr=ptr->next;
+			}
+			ptr->next=temp->next;;
+			delete temp;
+		}
+	}
+	void del_beg()
+	{
+		node *temp=head;
+		if(head==NULL)
+		cout<<"No elem to delete\n";
+		else
+		{
+			cout<<"The deleted elem is: \n"<<head->info;
+			head=head->next;
+			delete temp;
+		}
+		return;
+	}
+	void display()
+	{
+		node *temp=head;
+		if(head==NULL)
+		cout<<"Empty list\n";
+		else
+		{
+			cout<<"\nElem in the list are: ";
+			while(temp!=NULL)
+			{
+				cout<<" "<<temp->info;
+				temp=temp->next;
+			}
+		}
+	}
+};
+int main()
+{
+	int num,ch=1;
+	list ob;
+	cout<<"\n1.insert at beginning\n2.insert at end\n3.insert at random\n4.delete at beginning\n5.delete at end\n6.delete at random\n7.exit\n";
+	while(ch)
+	{
+		cout<<"\nEnter choice\n";
+		cin>>ch;
+		switch(ch)
+		{
+			case 1: cout<<"\nEnter the elem to insert\n";
+					cin>>num;
+					ob.insert_beg(num);
+					ob.display();
+			break;
+			case 2: cout<<"\nEnter the elem to insert\n";
+					cin>>num;
+					ob.insert_end(num);
+					ob.display();
+					break;
+			case 3: cout<<"\nEnter the elem to insert\n";
+					cin>>num;
+					ob.insert_random(num);
+					ob.display();
+break;
+			case 4: ob.del_beg();
+					ob.display();
+break;
+			case 5: ob.del_end();
+					ob.display();
+break;
+			case 6: ob.del_random();
+					ob.display();
+break;
+			case 7: return 0;
+			default: cout<<"invalid choice\n";
+			break;
+		}
+	}
+}
